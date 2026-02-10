@@ -36,7 +36,12 @@
              <Heart className="h-6 w-6 text-primary" />
              <span className="font-semibold text-lg">Cuenta Solidaria</span>
            </div>
-           <Link to="/login">
+           <Link to="/dashboard">
+             <Button variant="default" size="sm">
+               Ver Movimientos
+             </Button>
+           </Link>
+            <Link to="/login">
              <Button variant="ghost" size="sm">
                Administrador
              </Button>
