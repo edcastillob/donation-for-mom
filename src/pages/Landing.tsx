@@ -38,7 +38,7 @@
            </div>
            <Link to="/dashboard">
              <Button variant="default" size="sm">
-               Ver Movimientos
+               Movimientos
              </Button>
            </Link>
             <Link to="/login">
