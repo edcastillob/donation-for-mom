@@ -39,7 +39,7 @@ export default function TransactionDetail() {
         <div className="max-w-2xl mx-auto space-y-6">
           <Skeleton className="h-8 w-32" />
           <Card>
-            <CardContent className="p-6 space-y-4">
+            <CardContent className="p-4 sm:p-6 space-y-4">
               <Skeleton className="h-6 w-48" />
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-3/4" />
@@ -55,12 +55,12 @@ export default function TransactionDetail() {
       <Layout>
         <div className="max-w-2xl mx-auto">
           <Card>
-            <CardContent className="p-12 text-center">
+            <CardContent className="p-6 sm:p-12 text-center">
               <p className="text-muted-foreground mb-4">Transacción no encontrada</p>
-          <Link to="/dashboard">
+              <Link to="/dashboard">
                 <Button>
                   <ArrowLeft className="mr-2 h-4 w-4" />
-              Volver al dashboard
+                  Volver al dashboard
                 </Button>
               </Link>
             </CardContent>
@@ -72,50 +72,56 @@ export default function TransactionDetail() {
 
   return (
     <Layout>
-      <div className="max-w-2xl mx-auto space-y-6">
+      <div className="max-w-2xl mx-auto space-y-4 sm:space-y-6 px-2 sm:px-0">
         <Link to="/dashboard">
-          <Button variant="ghost">
+          <Button variant="ghost" size="sm" className="mb-2">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Volver al dashboard
+            Volver
           </Button>
         </Link>
 
         <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className={`p-3 rounded-full ${
+          <CardHeader className="px-4 sm:px-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-start sm:items-center gap-3">
+                <div className={`p-2 sm:p-3 rounded-full flex-shrink-0 ${
                   transaction.type === 'income'
                     ? 'bg-income/10 text-income'
                     : 'bg-expense/10 text-expense'
                 }`}>
                   {transaction.type === 'income' ? (
-                    <TrendingUp className="h-6 w-6" />
+                    <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6" />
                   ) : (
-                    <TrendingDown className="h-6 w-6" />
+                    <TrendingDown className="h-5 w-5 sm:h-6 sm:w-6" />
                   )}
                 </div>
-                <div>
-                  <CardTitle>{transaction.description}</CardTitle>
-                  <p className="text-sm text-muted-foreground">
+                <div className="min-w-0 flex-1">
+                  <CardTitle className="text-lg sm:text-xl truncate">
+                    {transaction.description}
+                  </CardTitle>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                     {transaction.type === 'income' ? 'Ingreso' : 'Egreso'}
                   </p>
                 </div>
               </div>
-              <div className={`text-2xl font-bold ${
+              <div className={`text-xl sm:text-2xl font-bold text-right sm:text-left ${
                 transaction.type === 'income' ? 'text-income' : 'text-expense'
               }`}>
+                <div className="text-xs sm:text-sm font-normal text-muted-foreground mb-1">
+                  Monto
+                </div>
                 {transaction.type === 'income' ? '+' : '-'}Bs. {formatBs(transaction.amount_bs)}
               </div>
             </div>
           </CardHeader>
-          <CardContent className="space-y-6">
+          
+          <CardContent className="space-y-4 sm:space-y-6 px-4 sm:px-6">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="flex items-center gap-3">
-                <Calendar className="h-5 w-5 text-muted-foreground" />
-                <div>
-                  <p className="text-sm text-muted-foreground">Fecha</p>
-                  <p className="font-medium">
+                <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-xs sm:text-sm text-muted-foreground">Fecha</p>
+                  <p className="font-medium text-sm sm:text-base truncate">
                     {format(new Date(transaction.date), "d 'de' MMMM, yyyy", { locale: es })}
                   </p>
                 </div>
@@ -123,32 +129,38 @@ export default function TransactionDetail() {
 
               {transaction.category && (
                 <div className="flex items-center gap-3">
-                  <DollarSign className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-sm text-muted-foreground">Categoría</p>
-                    <Badge variant="outline">
-                      {getCategoryLabel(transaction.category as ExpenseCategory)}
-                    </Badge>
+                  <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground flex-shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-muted-foreground">Categoría</p>
+                    <div className="mt-1">
+                      <Badge variant="outline" className="text-xs">
+                        {getCategoryLabel(transaction.category as ExpenseCategory)}
+                      </Badge>
+                    </div>
                   </div>
                 </div>
               )}
 
               {transaction.person && (
                 <div className="flex items-center gap-3">
-                  <User className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-sm text-muted-foreground">Persona</p>
-                    <p className="font-medium">{transaction.person.full_name}</p>
+                  <User className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground flex-shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-muted-foreground">Persona</p>
+                    <p className="font-medium text-sm sm:text-base truncate">
+                      {transaction.person.full_name}
+                    </p>
                   </div>
                 </div>
               )}
 
               {transaction.exchange_rate_used && (
                 <div className="flex items-center gap-3">
-                  <DollarSign className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-sm text-muted-foreground">Tasa de cambio usada</p>
-                    <p className="font-medium">Bs. {formatBs(transaction.exchange_rate_used)}</p>
+                  <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground flex-shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-muted-foreground">Tasa de cambio</p>
+                    <p className="font-medium text-sm sm:text-base">
+                      Bs. {formatBs(transaction.exchange_rate_used)}
+                    </p>
                   </div>
                 </div>
               )}
@@ -157,15 +169,15 @@ export default function TransactionDetail() {
             {transaction.receipt_image_url && (
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <Receipt className="h-5 w-5 text-muted-foreground" />
-                  <p className="font-medium">Recibo / Factura</p>
+                  <Receipt className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
+                  <p className="font-medium text-sm sm:text-base">Recibo / Factura</p>
                 </div>
                 <Dialog>
                   <DialogTrigger asChild>
                     <img
                       src={transaction.receipt_image_url}
                       alt="Recibo"
-                      className="rounded-lg border max-w-full max-h-96 object-contain cursor-pointer hover:opacity-80 transition-opacity"
+                      className="rounded-lg border w-full h-auto max-h-64 sm:max-h-96 object-contain cursor-pointer hover:opacity-80 transition-opacity"
                     />
                   </DialogTrigger>
                   <DialogContent className="max-w-4xl max-h-[90vh] p-2">
@@ -180,7 +192,7 @@ export default function TransactionDetail() {
               </div>
             )}
 
-            <div className="pt-4 border-t text-sm text-muted-foreground">
+            <div className="pt-4 border-t space-y-1 text-xs sm:text-sm text-muted-foreground">
               <p>Registrado: {format(new Date(transaction.created_at), "d/MM/yyyy 'a las' HH:mm", { locale: es })}</p>
               {transaction.updated_at !== transaction.created_at && (
                 <p>Última modificación: {format(new Date(transaction.updated_at), "d/MM/yyyy 'a las' HH:mm", { locale: es })}</p>
